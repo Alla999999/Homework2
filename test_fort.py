@@ -4,11 +4,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
+import pytest
 
 
 driver = webdriver.Chrome()
 
 class Tests:
+
     def test_radio_button_example(self):
         driver.get("https://courses.letskodeit.com/practice")
         wait = WebDriverWait(driver, 10)
@@ -30,6 +32,8 @@ class Tests:
         assert honda_radiobutton.is_selected()
         assert not bmw_radiobutton.is_selected()
         assert not benz_radiobutton.is_selected()
+
+
     def test_checkbox_example(self):
         driver.get("https://courses.letskodeit.com/practice")
         wait = WebDriverWait(driver, 10)
@@ -63,17 +67,18 @@ class Tests:
         assert not bmw_checkbox.is_selected()
         assert not benz_checkbox.is_selected()
         assert not honda_checkbox.is_selected()
+
     def test_mouse_hover(self):
         driver.get("https://courses.letskodeit.com/practice")
         wait =  WebDriverWait(driver, 10)
-        mouse_hover = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR, 'input[id="mousehover"]')))
+        mouse_hover = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR, 'button[id="mousehover"]')))
         driver.execute_script("arguments[0].scrollIntoView();", mouse_hover)
         honda_radiobutton = wait.until(ec.element_to_be_clickable((By.CSS_SELECTOR, 'input[id="hondaradio"]')))
 
         actions=ActionChains(driver)
         actions.move_to_element(mouse_hover).perform()
 
-        reload_hover = wait.until(ec.element_to_be_clickable((By.CSS_SELECTOR, 'div[class="mouse hover content"] > a:nth-child(2)')))
+        reload_hover = wait.until(ec.element_to_be_clickable((By.CSS_SELECTOR, 'div[class="mouse-hover-content"] > a:nth-child(2)')))
         reload_hover.click()
         honda_radiobutton = wait.until(ec.element_to_be_clickable((By.CSS_SELECTOR, 'input[id="hondaradio"]')))
         assert not honda_radiobutton.is_selected()
